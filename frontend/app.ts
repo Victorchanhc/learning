@@ -74,7 +74,7 @@ app.post('/find', async (req, res) => {
         
         const [_, files] = await parse(form, req)
         const target = (files.Logo as formidable.File).newFilename
-        const result = await fetch('http://127.0.0.1:8000/find', {
+        const result = await fetch('https://python.learningpremierleague.com', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
