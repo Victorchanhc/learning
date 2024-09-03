@@ -73,6 +73,15 @@ app.post('/find', async (req, res) => {
 
 		const [_, files] = await parse(form, req)
 		const target = (files.Logo as formidable.File).newFilename
+
+        // const buffer = await fs.promises.readFile(`public/uploads/${target}`)
+        // const formData = new FormData()
+        // formData.append('file', buffer)
+        // const response = await fetch('https://python.learningpremierleague.com', {
+		// 	method: 'POST',
+		// 	body: formData
+		// })
+
 		const result = await fetch('https://python.learningpremierleague.com', {
 			method: 'POST',
 			headers: {

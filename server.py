@@ -18,6 +18,10 @@ model = tf.keras.models.load_model('my_model.keras')
 # Add some type declaration
 @app.post("/find")
 def callModel(request: Any):
+
+    # Read https://sanic.dev/en/guide/basics/request.html#request
+
+
     file_name = request.json.get('file_name')
     # picture = request.files.get('Logo')
     # print(picture)
@@ -29,7 +33,7 @@ def callModel(request: Any):
     print(image)
     print("get image2")
     IMG_SIZE = 160
-
+    
     image = keras.utils.load_img(image, target_size=(IMG_SIZE,IMG_SIZE))
     input_arr = keras.utils.img_to_array(image)
     input_arr = np.array([image]) 
