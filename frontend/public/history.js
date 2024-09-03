@@ -1,29 +1,24 @@
-
 window.onload = async () => {
-    loadHistory();
-    loadAccount();
+	loadHistory()
+	loadAccount()
 }
 
 async function loadHistory() {
+	const res = await fetch('/history')
+	const details = await res.json()
+	const LvContent = document.querySelector('.LiverpoolContent')
+	const MuContent = document.querySelector('.ManchesterUnitedContent')
+	const McContent = document.querySelector('.ManchesterCityContent')
+	const personalBtn = document.querySelector('.personalBtn')
 
-    const res = await fetch('/history')
-    const details = await res.json()
-    const LvContent = document.querySelector('.LiverpoolContent')
-    const MuContent = document.querySelector('.ManchesterUnitedContent')
-    const McContent = document.querySelector('.ManchesterCityContent')
-    const personalBtn = document.querySelector('.personalBtn')
-
-    console.log(details)
-    if (details == 'Please Log in !') {
-
-        console.log('Please Log In')
-
-    } else {
-        for (detail of details) {
-            if (detail.name === 'Manchester United') {
-                if (detail.photo_name === "") {
-                    MuContent.innerHTML =
-                        `<div class="d-flex flex-column text-light border border-warning rounded p-3">
+	console.log(details)
+	if (details == 'Please Log in !') {
+		console.log('Please Log In')
+	} else {
+		for (detail of details) {
+			if (detail.name === 'Manchester United') {
+				if (detail.photo_name === '') {
+					MuContent.innerHTML = `<div class="d-flex flex-column text-light border border-warning rounded p-3">
                         <div class="d-flex justify-content-center">
                             <img src="uploads/null.jpg" class="clubPhoto w-25" alt="???" /></img>
                         </div>
@@ -33,9 +28,8 @@ async function loadHistory() {
                             <a class="btn btn-warning btn-sm mt-2" href="/" role="button">Add</a>
                         </div>
                     </div>`
-                } else {
-                    MuContent.innerHTML =
-                        `<div class="d-flex flex-column text-light border border-warning rounded p-3">
+				} else {
+					MuContent.innerHTML = `<div class="d-flex flex-column text-light border border-warning rounded p-3">
                         <div class="d-flex justify-content-center">
                             <img src="uploads/${detail.photo_name}" class="clubPhoto" width="100px" alt="???"/>
                         </div>
@@ -45,12 +39,11 @@ async function loadHistory() {
                             <button class="${detail.id} ${detail.photo_name} delBtn btn btn-warning btn-sm mt-2">Delete</button>
                         </div>
                     </div>`
-                }
-            } else if (detail.name === 'Liverpool') {
-                console.log('is Liverpool')
-                if (detail.photo_name === "") {
-                    LvContent.innerHTML =
-                        `<div class="d-flex flex-column text-light border border-warning rounded p-3">
+				}
+			} else if (detail.name === 'Liverpool') {
+				console.log('is Liverpool')
+				if (detail.photo_name === '') {
+					LvContent.innerHTML = `<div class="d-flex flex-column text-light border border-warning rounded p-3">
                         <div class="d-flex justify-content-center">
                             <img src="uploads/null.jpg" class="clubPhoto w-25" alt="???" /></img>
                         </div>
@@ -60,9 +53,8 @@ async function loadHistory() {
                             <a class="btn btn-warning btn-sm mt-2" href="/" role="button">Add</a>
                         </div>
                     </div>`
-                } else {
-                    LvContent.innerHTML =
-                        `<div class="d-flex flex-column text-light border border-warning rounded p-3">
+				} else {
+					LvContent.innerHTML = `<div class="d-flex flex-column text-light border border-warning rounded p-3">
                     <div class="d-flex justify-content-center">
                         <img src="uploads/${detail.photo_name}" class="clubPhoto" width="100px" alt="???"/>
                     </div>
@@ -72,12 +64,11 @@ async function loadHistory() {
                        <button class="${detail.id} ${detail.photo_name} delBtn btn btn-warning btn-sm mt-2">Delete</button>
                     </div>  
                 </div>`
-                }
-                console.log('finish change inner')
-            } else if (detail.name === 'Manchester City') {
-                if (detail.photo_name === "") {
-                    McContent.innerHTML =
-                        `<div class="d-flex flex-column text-light border border-warning rounded p-3">
+				}
+				console.log('finish change inner')
+			} else if (detail.name === 'Manchester City') {
+				if (detail.photo_name === '') {
+					McContent.innerHTML = `<div class="d-flex flex-column text-light border border-warning rounded p-3">
                         <div class="d-flex justify-content-center">
                             <img src="uploads/null.jpg" class="clubPhoto w-25" alt="???" /></img>
                         </div>
@@ -87,9 +78,8 @@ async function loadHistory() {
                             <a class="btn btn-warning btn-sm mt-2" href="/" role="button">Add</a>
                         </div>
                     </div>`
-                } else {
-                    McContent.innerHTML =
-                        `<div class="d-flex flex-column text-light border border-warning rounded p-3">
+				} else {
+					McContent.innerHTML = `<div class="d-flex flex-column text-light border border-warning rounded p-3">
                     <div class="d-flex justify-content-center">
                         <img src="uploads/${detail.photo_name}" class="clubPhoto" width="100px" alt="???"/>
                     </div>
@@ -99,29 +89,28 @@ async function loadHistory() {
                         <button class="${detail.id} ${detail.photo_name} delBtn btn btn-warning btn-sm mt-2">Delete</button>
                     </div>  
                 </div>`
-                }
-            }
+				}
+			}
 
+			const deleteBtns = document.querySelectorAll('.delBtn')
 
-            const deleteBtns = document.querySelectorAll('.delBtn')
-
-            deleteBtns.forEach((deleteBtn, index) => {
-                deleteBtn.addEventListener('click', async () => {
-
-                    const res = await fetch(`/deleteClub`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ id: deleteBtn.classList[0], photo_name:deleteBtn.classList[1]})
-                    });
-                    window.location.reload()
-
-                })
-            })
-        }
-        personalBtn.innerHTML =
-            `<div class="dropdown">
+			deleteBtns.forEach((deleteBtn, index) => {
+				deleteBtn.addEventListener('click', async () => {
+					const res = await fetch(`/deleteClub`, {
+						method: 'PUT',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({
+							id: deleteBtn.classList[0],
+							photo_name: deleteBtn.classList[1]
+						})
+					})
+					window.location.reload()
+				})
+			})
+		}
+		personalBtn.innerHTML = `<div class="dropdown">
             <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Hi ! ${details[0].username}
             </button>
@@ -134,28 +123,22 @@ async function loadHistory() {
             <li><a class="dropdown-item" href="/logout">Log lout</a></li>
             </ul>
         </div>`
-
-    }
-
+	}
 }
 
 async function loadAccount() {
+	const res = await fetch('/getUser')
+	const details = await res.json()
+	const personalContent = document.querySelector('.modalContainer')
 
-    const res = await fetch('/getUser')
-    const details = await res.json()
-    const personalContent = document.querySelector('.modalContainer')
-
-    if (details == 'Please Log in !') {
-
-        // window.location = To login page
-        console.log('Please Log In')
-        // Show modal
-        // or 
-        // use alert function
-
-    } else {
-        personalContent.innerHTML =
-            `<div class="modal fade" id="myAccountModal" tabindex="-1" aria-labelledby="myAccountModalLabel" aria-hidden="true">
+	if (details == 'Please Log in !') {
+		// window.location = To login page
+		console.log('Please Log In')
+		// Show modal
+		// or
+		// use alert function
+	} else {
+		personalContent.innerHTML = `<div class="modal fade" id="myAccountModal" tabindex="-1" aria-labelledby="myAccountModalLabel" aria-hidden="true">
                 <div class="modal-dialog ">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -195,48 +178,44 @@ async function loadAccount() {
                         </div>
                     </div>
                 </div>
-            </div>`;
+            </div>`
 
-        const editSubmitBtn = document.querySelector('.editSubmit')
-        editSubmitBtn.addEventListener('click', async () => {
+		const editSubmitBtn = document.querySelector('.editSubmit')
+		editSubmitBtn.addEventListener('click', async () => {
+			const updateEmail = document.querySelector('.newEmail')
+			const updatePassword = document.querySelector('.newPassword')
+			const updateName = document.querySelector('.newName')
+			const updateDateOfBirth = document.querySelector('.newDateOfBirth')
 
-            const updateEmail = document.querySelector(".newEmail")
-            const updatePassword = document.querySelector(".newPassword")
-            const updateName = document.querySelector(".newName")
-            const updateDateOfBirth = document.querySelector(".newDateOfBirth")
-
-            const res = await fetch(`/editUser`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email: updateEmail.value, password: updatePassword.value, name: updateName.value, date_of_birth: updateDateOfBirth.value })
-            });
-            window.location.reload()
-        })
-    }
-
-
-
-
+			const res = await fetch(`/editUser`, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					email: updateEmail.value,
+					password: updatePassword.value,
+					name: updateName.value,
+					date_of_birth: updateDateOfBirth.value
+				})
+			})
+			window.location.reload()
+		})
+	}
 }
 
 document.getElementById('switchToDark').addEventListener('click', () => {
-    if (document.documentElement.getAttribute('data-bs-theme') == 'light') {
-        document.documentElement.setAttribute('data-bs-theme', 'dark')
-    }
-    else {
-        document.documentElement.setAttribute('data-bs-theme', 'dark')
-    }
+	if (document.documentElement.getAttribute('data-bs-theme') == 'light') {
+		document.documentElement.setAttribute('data-bs-theme', 'dark')
+	} else {
+		document.documentElement.setAttribute('data-bs-theme', 'dark')
+	}
 })
 
 document.getElementById('switchToLight').addEventListener('click', () => {
-    if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
-        document.documentElement.setAttribute('data-bs-theme', 'light')
-    }
-    else {
-        document.documentElement.setAttribute('data-bs-theme', 'light')
-    }
+	if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
+		document.documentElement.setAttribute('data-bs-theme', 'light')
+	} else {
+		document.documentElement.setAttribute('data-bs-theme', 'light')
+	}
 })
-
-
