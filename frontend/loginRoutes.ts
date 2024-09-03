@@ -11,6 +11,7 @@ loginRoutes.get('/logout', logout)
 
 async function login(req: express.Request, res: express.Response) {
 
+    // Didn't use hash
     const userList: Detail[] = await knex.select('users.id', 'users.name', 'users.email', 'users.password')
         .from('users')
         .where('users.email', req.body.email)

@@ -147,7 +147,11 @@ async function loadAccount() {
 
     if (details == 'Please Log in !') {
 
+        // window.location = To login page
         console.log('Please Log In')
+        // Show modal
+        // or 
+        // use alert function
 
     } else {
         personalContent.innerHTML =

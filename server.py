@@ -1,4 +1,5 @@
 from io import BytesIO
+from typing import Any
 from sanic import Sanic
 from sanic.response import json,file
 import tensorflow as tf
@@ -14,14 +15,16 @@ app = Sanic("Learning-Premier-League")
 
 model = tf.keras.models.load_model('my_model.keras')
 
+# Add some type declaration
 @app.post("/find")
-def callModel(request):
+def callModel(request: Any):
     file_name = request.json.get('file_name')
     # picture = request.files.get('Logo')
     # print(picture)
     image = 'frontend/public/uploads/'+ file_name
     # image = request.files.get('Premium')
 
+    # Remove unused print statement
     print("called")
     print(image)
     print("get image2")

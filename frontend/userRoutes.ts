@@ -32,6 +32,8 @@ export async function getUser(req: express.Request, res: express.Response) {
 async function editUser(req: express.Request, res: express.Response) {
     try {
 
+        // Route 1: update user info
+        // Route 2: update user password
         await knex('users').update({
             email: req.body.email,
             password: req.body.password,
@@ -52,6 +54,7 @@ async function editUser(req: express.Request, res: express.Response) {
 async function addUser(req: express.Request, res: express.Response) {
     try {
 
+        // hashing
         const [user] = await knex.insert({
             email: req.body.email,
             password: req.body.password,

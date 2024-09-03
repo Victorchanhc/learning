@@ -8,12 +8,12 @@ import Knex from 'knex';
 import { loginRoutes } from './loginRoutes';
 import { userRoutes } from './userRoutes';
 // import { isLoggedIn } from './guard'
-import { deleteHistory,saveHistory} from './historyRoutes'
+
 import { getUser } from './userRoutes'
 import { isLoggedIn } from './guard'
 import { HistoryService } from './services/HistoryService'
 import { HistoryController } from './controllers/HistoryController'
-
+import { deleteHistory,getHistoryRoutes,saveHistory} from './historyRoutes'
 
 // import { Request, Response } from 'express'
 const uploadDir = 'public/uploads'
@@ -51,6 +51,8 @@ export const knex = Knex(knexConfig);
 
 export let historyService = new HistoryService(knex)
 export let historyController = new HistoryController(historyService)
+
+
 
 app.use(express.static('public'))
 
@@ -104,7 +106,7 @@ app.post('/find', async (req, res) => {
 })
 
 app.post('/login', loginRoutes)
-app.use('/history', historyController.getHistory)
+app.use('/history', getHistoryRoutes())
 app.use('/deleteClub', deleteHistory)
 app.use('/getUser', getUser)
 

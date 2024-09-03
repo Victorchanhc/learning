@@ -1,5 +1,5 @@
 import express from 'express'
-import {knex } from './app'
+import {historyController, knex } from './app'
 
 declare module 'express-session' {
     interface SessionData {
@@ -9,13 +9,14 @@ declare module 'express-session' {
     }
 }
 
-export const historyRoutes = express.Router()
+export function getHistoryRoutes(){
+    const historyRoutes = express.Router()
+    historyRoutes.get('/', historyController.getHistory)
+    return historyRoutes
+}
 
 
 
-// historyRoutes.use('/', historyController.getHistory)
-// historyRoutes.put('/editUser', editUser)
-// historyRoutes.post('/register', addUser)
 
 
 export async function saveHistory(req: express.Request, res: express.Response) {
